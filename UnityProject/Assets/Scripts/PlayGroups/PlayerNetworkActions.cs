@@ -644,4 +644,11 @@ public partial class PlayerNetworkActions : NetworkBehaviour
 	{
 		activeHand = hand;
 	}
+
+	//TEST SERVER AUTHORATIVE SHUTTLE MOVE
+	[Command]
+	public void CmdServerShuttleFlightTest(GameObject shuttle){
+		ShuttleController shuttleControl = shuttle.GetComponent<ShuttleController>();
+		shuttleControl.doFlyingThing = true;
+	}
 }

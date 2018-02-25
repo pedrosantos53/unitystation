@@ -14,7 +14,7 @@ namespace Tilemaps.Behaviours
 
 		private void Start()
 		{
-			metaTileMap = GetComponent<MetaTileMap>();
+			metaTileMap = GetComponentInChildren<MetaTileMap>();
 			objectLayer = GetComponentInChildren<ObjectLayer>();
 		}
 

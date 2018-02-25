@@ -13,8 +13,8 @@ namespace Tilemaps.Behaviours.Meta
 
 		public override void OnStartServer()
 		{
-			metaDataLayer = GetComponent<MetaDataLayer>();
-			metaTileMap = GetComponentInParent<MetaTileMap>();
+			metaDataLayer = GetComponentInChildren<MetaDataLayer>();
+			metaTileMap = GetComponentInChildren<MetaTileMap>();
 
 			InitializeRooms();
 		}

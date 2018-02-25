@@ -36,7 +36,13 @@ namespace Tilemaps.Behaviours.Objects
 			GameObject parent = ClientScene.FindLocalObject(netId);
 			Unregister();
 			layer = parent.GetComponentInChildren<ObjectLayer>();
-			Matrix = parent.GetComponent<Matrix>();
+			Matrix = parent.GetComponentInChildren<Matrix>();
+			if (layer == null) {
+				Debug.Log("LAYER NULL");
+			}
+			if (Matrix == null) {
+				Debug.Log("MATRIX NULL");
+			}
 			transform.parent = layer.transform; 
 			Register();
 		}
@@ -48,6 +54,12 @@ namespace Tilemaps.Behaviours.Objects
 			Matrix = newParent.GetComponent<Matrix>();
 			transform.parent = layer.transform;
 			Register();
+			CmdUpdateParent(newParent.parent.GetComponent<NetworkIdentity>().netId);
+		}
+
+		[Command]
+		private void CmdUpdateParent(NetworkInstanceId netId){
+			ParentNetId = netId;
 		}
 
 		public Vector3Int Position
@@ -73,7 +85,7 @@ namespace Tilemaps.Behaviours.Objects
 		{
 			if(transform.parent != null)
 			{
-				layer = transform.parent.GetComponentInParent<ObjectLayer>();
+				layer = transform.parent.GetComponent<ObjectLayer>();
 				Matrix = transform.parent.GetComponentInParent<Matrix>();
 				Register();
 			}
@@ -83,7 +95,7 @@ namespace Tilemaps.Behaviours.Objects
 		{
 			if (isServer && transform.parent != null)
 			{
-				ParentNetId = transform.parent.GetComponentInParent<NetworkIdentity>().netId;
+				ParentNetId = transform.parent.transform.parent.GetComponentInParent<NetworkIdentity>().netId;
 			}
 		}
 
