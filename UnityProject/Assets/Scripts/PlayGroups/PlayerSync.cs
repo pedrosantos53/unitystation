@@ -215,8 +215,19 @@ namespace PlayGroup
 					return;
 				}
 
-				PlayerState state = isLocalPlayer ? predictedState : serverState;
-				transform.localPosition = Vector3.MoveTowards(transform.localPosition, state.Position, playerMove.speed * Time.deltaTime);
+				PlayerState state;
+				//= isLocalPlayer ? predictedState : serverState;
+				if(isLocalPlayer){
+					state = predictedState;
+					transform.localPosition = Vector3.MoveTowards(transform.localPosition, predictedState.Position, playerMove.speed * Time.deltaTime);
+				} else {
+					state = serverState;
+				}
+
+				if (isServer) {
+					state = serverState;
+					transform.localPosition = Vector3.MoveTowards(transform.localPosition, serverState.Position, playerMove.speed * Time.deltaTime);
+				} 
 
 				//Check if we should still be displaying an ItemListTab and update it, if so.
 				ControlTabs.CheckItemListTab();

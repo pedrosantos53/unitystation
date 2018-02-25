@@ -37,14 +37,11 @@ namespace Tilemaps.Behaviours.Objects
 			Unregister();
 			layer = parent.GetComponentInChildren<ObjectLayer>();
 			Matrix = parent.GetComponentInChildren<Matrix>();
-			if (layer == null) {
-				Debug.Log("LAYER NULL");
-			}
-			if (Matrix == null) {
-				Debug.Log("MATRIX NULL");
-			}
 			transform.parent = layer.transform; 
 			Register();
+			if (gameObject.layer == 8) { //player
+				GetComponent<PlayerSync>().SetPosition(transform.localPosition);
+			}
 		}
 
 		//Is not network synced, is used for prediction on local client when walking between matricies
@@ -55,6 +52,9 @@ namespace Tilemaps.Behaviours.Objects
 			transform.parent = layer.transform;
 			Register();
 			CmdUpdateParent(newParent.parent.GetComponent<NetworkIdentity>().netId);
+			if(gameObject.layer == 8){ //player
+				GetComponent<PlayerSync>().SetPosition(transform.localPosition);
+			}
 		}
 
 		[Command]

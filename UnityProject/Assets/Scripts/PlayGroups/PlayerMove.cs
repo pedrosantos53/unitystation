@@ -311,15 +311,7 @@ namespace PlayGroup
 
 		public void ChangeMatricies(Transform newParent)
 		{
-			if (isServer) {
-				NetworkIdentity netIdent = newParent.parent.GetComponent<NetworkIdentity>();
-				if (registerTile.ParentNetId != netIdent.netId) {
-					registerTile.ParentNetId = netIdent.netId;
-					playerSync.SetPosition(transform.localPosition);
-				}
-			} else {
-				registerTile.SetParentOnLocal(newParent);
-			}
+			registerTile.SetParentOnLocal(newParent);
 			Camera.main.transform.parent = newParent;
 		}
 	}
